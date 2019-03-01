@@ -1,11 +1,14 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build Subsonic-stable') {
-      steps {
-        dir(path: 'subsonic-stable')
-        sh 'docker build .'
-      }
-    }
-  }
+      agent any
+            stages {
+                    stage('build subsonic') {
+                              steps {
+                                          dir(path: 'subsonic') {
+                                                        sh 'make build'
+                                                                    }
+
+                                                }
+                                  }
+                      }
+
 }
