@@ -3,9 +3,9 @@ MAINTAINER Carlos Hernandez <carlos@techbyte.ca>
 ENV LANG="en_US.UTF-8" s6_overlay_version="1.17.1.2" APP_NAME="subsonic" IMG_NAME="subsonic" TAG_NAME="latest" S6_LOGGING="0"
 
 RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman \
- && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct \
  && zypper --gpg-auto-import-keys ref \
  && zypper --non-interactive up \
+ && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct \
  && zypper --non-interactive in --no-recommends \
         file \
 	curl \
