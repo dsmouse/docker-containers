@@ -4,7 +4,7 @@ pipeline {
     stage('build subsonic-stable') {
       steps {
         dir(path: 'subsonic-stable') {
-          sh 'docker build .'
+          sh 'make build'
         }
 
       }
