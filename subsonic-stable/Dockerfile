@@ -6,6 +6,7 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
  && zypper --gpg-auto-import-keys ref \
  && zypper --non-interactive up \
  && zypper --non-interactive in --no-recommends \
+        file \
 	curl \
 	glibc-locale \
 	java-1_8_0-openjdk-headless \
