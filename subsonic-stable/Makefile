@@ -2,7 +2,10 @@ all: build
 
 APP_NAME="subsonic"
 IMG_NAME="subsonic"
+
+ifndef TAG_NAME
 TAG_NAME="latest"
+endif
 
 ifndef APP_REPO
 APP_REPO=${USER}
