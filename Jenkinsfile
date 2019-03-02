@@ -6,7 +6,9 @@ pipeline {
         stage('build subsonic-stable') {
           steps {
             dir(path: 'subsonic-stable') {
-              sh 'make build'
+              sh '''export TAG_NAME=${BRANCH_NAME}
+export APP_REPO=dsmouse.net
+make build'''
             }
 
           }
