@@ -5,7 +5,7 @@ ENV LANG="en_US.UTF-8" s6_overlay_version="1.17.1.2" APP_NAME="subsonic" IMG_NAM
 RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman \
  && zypper --gpg-auto-import-keys ref \
  && zypper --non-interactive up \
- && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct \
+ && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct || true \
  && zypper --non-interactive in --no-recommends \
         file \
 	curl \
@@ -16,6 +16,7 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
 	tar \
 	timezone \
   && curl -skL https://github.com/just-containers/s6-overlay/releases/download/v${s6_overlay_version}/s6-overlay-amd64.tar.gz -o /tmp/s6-overlay-amd64.tar.gz \
+ && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct || true \
   && tar xf /tmp/s6-overlay-amd64.tar.gz -C / \
   && echo $(curl -skL https://sourceforge.net/projects/subsonic/rss |grep link|grep download|grep tar.gz|grep -iv beta|sed -n s%"\s\+<link>\([^<]*\).*"%"\1"%p|head -1|awk -F/ '{print $8}') > /subsonic.version \
   &&  curl -skL $(curl -skL https://sourceforge.net/projects/subsonic/rss |grep link|grep download|grep tar.gz|grep -iv beta|sed -n s%"\s\+<link>\([^<]*\).*"%"\1"%p|head -1|sed s%/download$%%) -o /tmp/subsonic.tar.gz \
