@@ -21,5 +21,11 @@ pipeline {
         }
       }
     }
+    stage('docker1') {
+      steps {
+        sh '''docker image ls || true
+docker container list || true'''
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ ENV LANG="en_US.UTF-8" s6_overlay_version="1.17.1.2" APP_NAME="subsonic" IMG_NAM
 RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman \
  && zypper --gpg-auto-import-keys ref \
  && zypper --non-interactive up \
+ && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct || true \
  && zypper --non-interactive in --no-recommends \
         file \
 	curl \
@@ -15,11 +16,20 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
 	tar \
 	timezone \
   && curl -skL https://github.com/just-containers/s6-overlay/releases/download/v${s6_overlay_version}/s6-overlay-amd64.tar.gz -o /tmp/s6-overlay-amd64.tar.gz \
+  && ls -lthr /etc/products.d/* \
+ && rm -fv /etc/products.d/baseproduct || true \
+ && echo cp-a \
+ && ln -v -s /etc/products.d/openSUSE.prod /etc/products.d/baseproduct || true \
   && tar xf /tmp/s6-overlay-amd64.tar.gz -C / \
+ && echo cp-b \
   && echo $(curl -skL https://sourceforge.net/projects/subsonic/rss |grep link|grep download|grep tar.gz|grep -iv beta|sed -n s%"\s\+<link>\([^<]*\).*"%"\1"%p|head -1|awk -F/ '{print $8}') > /subsonic.version \
+ && echo cp-c \
   &&  curl -skL $(curl -skL https://sourceforge.net/projects/subsonic/rss |grep link|grep download|grep tar.gz|grep -iv beta|sed -n s%"\s\+<link>\([^<]*\).*"%"\1"%p|head -1|sed s%/download$%%) -o /tmp/subsonic.tar.gz \
+ && echo cp-d \
   && mkdir -p /opt/subsonic \
+ && echo cp-e \
   && tar xf /tmp/subsonic.tar.gz -C /opt/subsonic \
+ && echo cp-f \
   && rpm -e --nodeps --allmatches --noscripts \
 	`rpm -qa | grep aaa_base` \
 	`rpm -qa | grep acl | grep -v lib` \
@@ -39,13 +49,20 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
 	`rpm -qa | grep pkg-config` \
 	`rpm -qa | grep qrencode` \
 	`rpm -qa | grep sg3_utils` \
+ && echo cp-g \
   && ls /usr/lib/locale | grep -ve "en_CA*\|en_US*" | awk '{if(system("[ -f "$1" ]") == 0) {print $1} }' | xargs rm -rf \
+ && echo cp-h \
   && find /usr/share/locale -type f -name '*.mo' | grep -ve "en_US*"  | awk '{if(system("[ -f "$1" ]") == 0) {print $1} }' | xargs rm \
+ && echo cp-i \
   && zypper cc --all \
-  && rm -rf /usr/share/{man,doc,info,gnome/help} \
-  && rm -rf /var/cache/zypp* \
-  && rm -rf /tmp/* \
-  && rm -rf /var/log/*
+ && echo cp-j \
+  &&  rm -rf /usr/share/{man,doc,info,gnome/help} || true \
+ && echo cp-k \
+  && rm -rf /var/cache/zypp* || true \
+ && echo cp-l \
+  && rm -rf /tmp/* || true \
+ && echo cp-m \
+  && rm -rf /var/log/* || true
 
 COPY root /
 ENTRYPOINT ["/init"]
