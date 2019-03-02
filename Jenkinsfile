@@ -20,7 +20,7 @@ make build'''
       steps {
         sh '''date
 set
-docker containers ls
+docker container ls
 docker images ls'''
       }
     }
