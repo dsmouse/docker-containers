@@ -18,12 +18,18 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
   && curl -skL https://github.com/just-containers/s6-overlay/releases/download/v${s6_overlay_version}/s6-overlay-amd64.tar.gz -o /tmp/s6-overlay-amd64.tar.gz \
   && ls -lthr /etc/products.d/* \
  && rm -fv /etc/products.d/baseproduct || true \
+ && echo cp-a \
  && ln -v -s /etc/products.d/openSUSE.prod /etc/products.d/baseproduct || true \
   && tar xf /tmp/s6-overlay-amd64.tar.gz -C / \
+ && echo cp-b \
   && echo $(curl -skL https://sourceforge.net/projects/subsonic/rss |grep link|grep download|grep tar.gz|grep -iv beta|sed -n s%"\s\+<link>\([^<]*\).*"%"\1"%p|head -1|awk -F/ '{print $8}') > /subsonic.version \
+ && echo cp-c \
   &&  curl -skL $(curl -skL https://sourceforge.net/projects/subsonic/rss |grep link|grep download|grep tar.gz|grep -iv beta|sed -n s%"\s\+<link>\([^<]*\).*"%"\1"%p|head -1|sed s%/download$%%) -o /tmp/subsonic.tar.gz \
+ && echo cp-d \
   && mkdir -p /opt/subsonic \
+ && echo cp-e \
   && tar xf /tmp/subsonic.tar.gz -C /opt/subsonic \
+ && echo cp-f \
   && rpm -e --nodeps --allmatches --noscripts \
 	`rpm -qa | grep aaa_base` \
 	`rpm -qa | grep acl | grep -v lib` \
