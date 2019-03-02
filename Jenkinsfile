@@ -23,13 +23,6 @@ make build'''
         }
       }
     }
-    stage('docker1') {
-      steps {
-        sh '''docker image ls || true
-docker container list || true
-date'''
-      }
-    }
     stage('docker1b') {
       steps {
         sh '''docker image ls || true
