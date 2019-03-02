@@ -49,12 +49,19 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
 	`rpm -qa | grep pkg-config` \
 	`rpm -qa | grep qrencode` \
 	`rpm -qa | grep sg3_utils` \
+ && echo cp-g \
   && ls /usr/lib/locale | grep -ve "en_CA*\|en_US*" | awk '{if(system("[ -f "$1" ]") == 0) {print $1} }' | xargs rm -rf \
+ && echo cp-h \
   && find /usr/share/locale -type f -name '*.mo' | grep -ve "en_US*"  | awk '{if(system("[ -f "$1" ]") == 0) {print $1} }' | xargs rm \
+ && echo cp-i \
   && zypper cc --all \
+ && echo cp-j \
   && rm -rf /usr/share/{man,doc,info,gnome/help} \
+ && echo cp-k \
   && rm -rf /var/cache/zypp* \
+ && echo cp-l \
   && rm -rf /tmp/* \
+ && echo cp-m \
   && rm -rf /var/log/*
 
 COPY root /
