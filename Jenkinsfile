@@ -11,7 +11,10 @@ pipeline {
         dir(path: 'subsonic-stable') {
           sh '''export TAG_NAME=${BRANCH_NAME}
 export APP_REPO=dsmouse.net
-make build APP_REPO=dsmouse.net TAG_NAME=${BRANCH_NAME}'''
+make build APP_REPO=dsmouse.net TAG_NAME=${BRANCH_NAME}
+docker tag subsonic:${BRANCH_NAME} pub/subsonic:${BRANCH_NAME}
+docker push pub/subsonic:${BRANCH_NAME}
+'''
         }
 
       }
