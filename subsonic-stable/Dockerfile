@@ -62,7 +62,7 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
  && echo cp-l \
   && rm -rf /tmp/* || true \
  && echo cp-m \
-  && rm -rf /var/log/* || treu
+  && rm -rf /var/log/* || true
 
 COPY root /
 ENTRYPOINT ["/init"]
