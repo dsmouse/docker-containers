@@ -16,7 +16,7 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
 	tar \
 	timezone \
   && curl -skL https://github.com/just-containers/s6-overlay/releases/download/v${s6_overlay_version}/s6-overlay-amd64.tar.gz -o /tmp/s6-overlay-amd64.tar.gz \
-  && ls -lthr /etc/products.d/baseproduct \
+  && ls -lthr /etc/products.d/* \
  && rm -fv /etc/products.d/baseproduct || true \
  && ln -s /etc/products.d/SLES_SAP.prod /etc/products.d/baseproduct || true \
   && tar xf /tmp/s6-overlay-amd64.tar.gz -C / \
