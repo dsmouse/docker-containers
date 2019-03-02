@@ -30,5 +30,14 @@ docker container list || true
 date'''
       }
     }
+    stage('docker1b') {
+      steps {
+        sh '''docker image ls || true
+docker container list || true
+date
+set
+'''
+      }
+    }
   }
 }
