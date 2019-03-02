@@ -26,7 +26,8 @@ make build'''
     stage('docker1') {
       steps {
         sh '''docker image ls || true
-docker container list || true'''
+docker container list || true
+date'''
       }
     }
   }
