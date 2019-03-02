@@ -56,13 +56,13 @@ RUN zypper --non-interactive ar -f -n packman http://ftp.gwdg.de/pub/linux/misc/
  && echo cp-i \
   && zypper cc --all \
  && echo cp-j \
-  && rm -rf /usr/share/{man,doc,info,gnome/help} \
+  &&  rm -rf /usr/share/{man,doc,info,gnome/help} || true \
  && echo cp-k \
-  && rm -rf /var/cache/zypp* \
+  && rm -rf /var/cache/zypp* || true \
  && echo cp-l \
-  && rm -rf /tmp/* \
+  && rm -rf /tmp/* || true \
  && echo cp-m \
-  && rm -rf /var/log/*
+  && rm -rf /var/log/* || treu
 
 COPY root /
 ENTRYPOINT ["/init"]
